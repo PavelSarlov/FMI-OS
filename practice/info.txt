@@ -1,0 +1,201 @@
+k.trenchev@kmail.bg
+
+https://www.oreilly.com/openbook/freedom/
+
+host: astero.openfmi.net
+user: s62393
+password: d4rkmus2102
+ssh username@hostname
+ssh s71508@astero.openfmi.net
+
+_____________________________________________________________________________________________________________
+
+					Permissions and specials:
+
+Numeric representation:
+	7777
+SUID		- 4
+SGID		- 2
+Sticky Bit	- 1
+
+7 = UID GID Sticky
+6 = UID GID
+...
+0 = No special permissions
+
+Symbolic:
+
+1 2 3 4 5 6 7 8 9
+r - s - w S - - t
+
+SUID => execute owner
+SGID => execute group
+Sticky  Bit => execute other
+
+-	= No permissions. Neither execute nor special.
+x	= Execute permission, no special.
+s/t	= Execute + special.
+S/T	= No execute + special.
+
+SUID = s/S
+SGID = s/S
+Sticky = t/T
+
+_____________________________________________________________________________________________________________
+
+==) File System:
+__________________________________
+| Super Block | Data blocks array|
+----------------------------------
+
+====) Data blocks array:
+____________________________________________________
+| data block 1 | data block 2 | ... | data block N |
+----------------------------------------------------
+
+====) Super block:
+__________________________________
+| Meta Information| Inodes Table |
+----------------------------------
+
+======) Meta Information:
+________________________________________________
+| FS type | Block size | A lot of other things |
+------------------------------------------------
+
+======) Inodes Table:
+____________________________________
+| Inode 1| Inode 2 | ... | Inode N |
+------------------------------------
+
+========) Inode:
+_______________________________________
+| Meta Information| Data Blocks Array |
+---------------------------------------
+
+==========) Meta Information:
+Slides.
+
+==========) Data Blocks Array:
+Slides.
+
+_____________________________________________________________________________________________________________
+
+					Можем да закачим файлова система 2 за 1
+
+== FS 1
+/pesho
+	file_1
+	file_2
+/gosho
+
+
+== FS 2
+/banana/
+	petq
+	irena
+/apple/
+	lili
+	mimi
+
+== FS 2 mounted on /gosho of FS 1
+
+<mounting point>/<path in FS2>
+
+/pesho
+	file_1
+	file_2
+/gosho/banana
+		petq
+		irena
+/gosho/apple
+		lili
+		mimi
+
+_____________________________________________________________________________________________________________
+
+					Naive picture representation as file
+
+File:
+--------------------
+| Header | Payload |
+--------------------
+
+== Header:
+2x4 byte unsigned integers
+
+__________________
+| X axis | Y axis|
+------------------
+
+== Payload:
+3 byte structure which represent pixel's color
+
+_________________________________
+| pixel | pixel | ... | pixel N |
+---------------------------------
+n = X axis * Y axis
+
+==== Pixel:
+________________________________________
+| red value | green value | blue value |
+----------------------------------------
+
+
+					Naive movie representation as file
+
+______________________________
+| length in second | pictures|
+------------------------------
+
+length * 24 = pictures (24 fps)
+
+
+________________________________________________________________________________________________________________
+						
+						Process security context
+
+Real
+	user id		==> User ID
+	group id	==> Active group ID
+	
+	Signal checks made against these.
+
+Effective
+	user id		==> Same as real, unless set SUID bit
+			If SUID ==> Same as file's owner
+	group id	==> Same as real, unless set SGID bit
+			If SGID ==> Same as file's group
+
+	Nearly all checks
+
+Saved
+	user id		==> Same as real
+	group id	==> Same as real
+
+	Used to change real/effective IDs.
+
+
+user: kracu:student
+file: rwsrwsrwx root:teachers 
+
+
+Process:
+R:
+	user:	kracu
+	group:	student
+E:
+	user:	root
+	group:	teachers
+S:
+	user:	kracu
+	group:	student
+
+________________________________________________________________________________________________________________
+
+
+
+
+
+
+
